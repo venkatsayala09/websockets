@@ -1,5 +1,6 @@
-package com.example.messagingstompwebsocket;
+package com.demo.ws.scheduler;
 
+import com.demo.ws.service.NotificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -11,15 +12,15 @@ import org.springframework.stereotype.Component;
 @EnableScheduling
 @Configuration
 public class Scheduler {
-    private final GreetingService greetingService;
+    private final NotificationService notificationService;
 
-    Scheduler(GreetingService greetingService) {
-        this.greetingService = greetingService;
+    Scheduler(NotificationService notificationService) {
+        this.notificationService = notificationService;
     }
 
     @Scheduled(fixedRateString = "6000", initialDelayString = "0")
     public void schedulingTask() {
         log.info("Send messages due to schedule");
-            greetingService.sendMessages();
+        notificationService.sendMessages();
     }
 }

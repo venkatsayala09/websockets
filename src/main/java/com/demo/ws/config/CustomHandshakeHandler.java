@@ -1,12 +1,12 @@
-package com.example.messagingstompwebsocket;
+package com.demo.ws.config;
 
+import com.demo.ws.model.StompPrincipal;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 
 import java.security.Principal;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Set anonymous user (Principal) in WebSocket messages by using UUID
@@ -18,6 +18,6 @@ public class CustomHandshakeHandler extends DefaultHandshakeHandler {
                                       WebSocketHandler wsHandler,
                                       Map<String, Object> attributes) {
         // generate user name by UUID
-        return new StompPrincipal("Suchendra");
+        return new StompPrincipal("username");
     }
 }

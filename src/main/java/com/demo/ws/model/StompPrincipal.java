@@ -1,4 +1,4 @@
-package com.example.messagingstompwebsocket;
+package com.demo.ws.model;
 
 import java.security.Principal;
 
