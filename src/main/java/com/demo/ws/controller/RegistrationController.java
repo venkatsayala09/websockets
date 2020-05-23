@@ -57,12 +57,5 @@ public class RegistrationController {
         return new Notification("Hello, " + HtmlUtils.htmlEscape(principal.getName()) + "!");
     }
 
-    @MessageMapping("/health/{serviceName}/")
-    @SendTo("/health/{serviceName}/")
-    public String status(SimpMessageHeaderAccessor headerAccessor, @DestinationVariable String name) {
-        return new StringBuilder().append("Service").append(name)
-                .append("is up and running at ").append(new Date().toString()).toString();
-    }
-
 
 }
