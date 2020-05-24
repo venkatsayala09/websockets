@@ -18,9 +18,13 @@ public class Scheduler {
         this.notificationService = notificationService;
     }
 
-    @Scheduled(fixedRateString = "6000", initialDelayString = "0")
+    @Scheduled(fixedRateString = "20000", initialDelayString = "0")
     public void schedulingTask() {
-        log.info("Send messages due to schedule");
-        notificationService.sendMessages();
+        log.info("Scheduled message sent");
+        try {
+            notificationService.sendMessages();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

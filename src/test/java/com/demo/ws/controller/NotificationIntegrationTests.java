@@ -1,6 +1,6 @@
 package com.demo.ws.controller;
 
-import com.demo.ws.model.Ack;
+import com.demo.ws.model.Subscription;
 import com.demo.ws.model.Notification;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -76,7 +76,7 @@ public class NotificationIntegrationTests {
                 });
                 try {
 
-                    session.send("/app/notification", new Ack("username"));
+                    session.send("/app/notification", new Subscription("username"));
                 } catch (Throwable t) {
                     t.printStackTrace();
                     failure.set(t);
