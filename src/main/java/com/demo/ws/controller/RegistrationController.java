@@ -1,28 +1,24 @@
 package com.demo.ws.controller;
 
-import com.demo.ws.model.Notification;
-import com.demo.ws.service.NotificationService;
+import com.demo.ws.model.Registration;
 import com.demo.ws.model.StompPrincipal;
+import com.demo.ws.service.NotificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.messaging.simp.user.SimpUserRegistry;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.util.HtmlUtils;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Slf4j
-@Controller
+@RestController
+
 public class RegistrationController {
     @Autowired
     private SimpUserRegistry userRegistry;
@@ -42,19 +38,22 @@ public class RegistrationController {
 
     @GetMapping("/services")
     public List<String> printServices() {
-        return Arrays.asList(new String[]{"PhoneService"});
+        return notificationService.listServices();
     }
 
 
+    //TODO - add integration test
     @MessageMapping("/register")
-    @SendToUser("/topic/registrations")
-    public Notification register(StompPrincipal principal, SimpMessageHeaderAccessor headerAccessor) throws Exception {
+    @SendTo("/topic/registrations")
+    public Registration register(Registration registration, StompPrincipal principal, SimpMessageHeaderAccessor headerAccessor) throws Exception {
         log.info("Received registration request from {}", principal.getName());
         String sessionId = headerAccessor.getSessionAttributes().get("sessionId").toString();
         log.info("Session id is {} ", sessionId);
         notificationService.addUserName(principal.getName());
+        notificationService.register(registration);
         Thread.sleep(1000);
-        return new Notification("Hello, " + HtmlUtils.htmlEscape(principal.getName()) + "!");
+        return registration;
+        //return new Ack("Registration Successful ->" + registration.toString() );
     }
 
 

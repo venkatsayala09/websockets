@@ -1,7 +1,7 @@
 package com.demo.ws.controller;
 
-import com.demo.ws.model.Ack;
 import com.demo.ws.model.Notification;
+import com.demo.ws.model.Subscription;
 import com.demo.ws.service.NotificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +27,12 @@ public class NotificationControler {
     private SimpMessagingTemplate messagingTemplate;
 
 
-    @MessageMapping("/notification")
+    @MessageMapping("/notify")
     @SendToUser("/topic/notifications")
-    public Notification notification(Ack message, Principal principal/*,SimpMessageHeaderAccessor headerAccessor*/) throws Exception {
+    public Notification notification(Subscription message, Principal principal) throws Exception {
         log.info("Received notification message {} from {}", message, principal.getName());
         Thread.sleep(1000); // simulated delay
-        return new Notification("Hello, " + HtmlUtils.htmlEscape(message.getName()) + "!");
+        return new Notification("Hello, " + HtmlUtils.htmlEscape(message.getContent()) + "!");
     }
 
 

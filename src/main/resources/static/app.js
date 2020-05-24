@@ -22,6 +22,10 @@ function connect() {
             console.log('Received WS message: '+ notification.body);
             showNotification(JSON.parse(notification.body).content);
         });
+        stompClient.subscribe('/topic/registrations', function (registration) {
+            console.log('Received WS message: '+ registration.body);
+            showRegistration(JSON.parse(registration.body).name,  JSON.parse(registration.body).url );
+        });
     });
 }
 
@@ -34,11 +38,19 @@ function disconnect() {
 }
 
 function sendName() {
-    stompClient.send("/app/notification", {}, JSON.stringify({'name': $("#name").val()}));
+    stompClient.send("/app/notify", {}, JSON.stringify({'content': $("#name").val()}));
+}
+
+function register() {
+    stompClient.send("/app/register", {}, JSON.stringify({'name': $("#serviceName").val(), 'url': $("#serviceURL").val()}));
 }
 
 function showNotification(message) {
     $("#notifications").append("<tr><td>" + message + "</td></tr>");
+}
+
+function showRegistration(name, url) {
+    $("#registrations").append("<tr><td>" + name + "</td><td>" + url + "</td></tr>");
 }
 
 $(function () {
@@ -48,5 +60,6 @@ $(function () {
     $( "#connect" ).click(function() { connect(); });
     $( "#disconnect" ).click(function() { disconnect(); });
     $( "#send" ).click(function() { sendName(); });
+    $( "#register" ).click(function() { register(); });
 });
 

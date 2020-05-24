@@ -17,7 +17,7 @@ public class HealthController {
     @Autowired
     private NotificationService notificationService;
 
-
+    //TODO - No client has subscribed to this topic. Add code in UI and integration test
     @MessageMapping("/health/{serviceName}/")
     @SendTo("/health/{serviceName}/")
     public String status(SimpMessageHeaderAccessor headerAccessor, @DestinationVariable String name) {

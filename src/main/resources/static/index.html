@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Hello WebSocket</title>
     <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -35,6 +35,38 @@
             </form>
         </div>
     </div>
+    </br>
+    <div class="row">
+        <div class="col-md-6 well">
+            <form class="form-inline">
+                <div class="form-group">
+                    <label for="name">Register Service For Monitoring</label>
+                    </br>
+                    <label for="name">Service Name</label>
+                    <input class="form-control" id="serviceName" placeholder="Enter client service name"
+                           type="text"></br></br>
+                    <label for="name">Service URL &nbsp;</label>
+                    <input class="form-control" id="serviceURL" placeholder="Enter URL" type="text"></br>
+                </div>
+                </br></br></br>
+                <button class="btn btn-default" id="register" type="submit">Register</button>
+            </form>
+        </div>
+        <div class="col-md-6 panel panel-default">
+            <label for="name">Registrations</label>
+            <table class="table table-striped" id="table-registration">
+                <thead>
+                <tr>
+                    <td>Name</td>
+                    <td>URL</td>
+                </tr>
+                </thead>
+                <tbody id="registrations">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-md-12">
             <table class="table table-striped" id="conversation">
@@ -47,6 +79,7 @@
                 </tbody>
             </table>
         </div>
+
     </div>
 </div>
 </body>
